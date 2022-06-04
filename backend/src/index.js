@@ -4,6 +4,7 @@ const cors = require("cors")
 const swaggerTools = require("swagger-tools")
 const { loadFixtures } = require("../fixtures"); //deconstruction
 
+const{tags,users,products,purchases,auth} = require("./services")
 
 const server = express()
 const PORT =  8080
@@ -21,6 +22,12 @@ server.get("/",function(req,res){
     res.status(200).send("<h1>Bienvenue dans mon serveur </h1>")
     
 })
+
+server.use("/api/tags",tags)
+server.use("/api/products",products)
+server.use("/api/purchases",purchases)
+server.use("/api/users",users)
+server.use("/api/auth",auth)
 
 server.listen(PORT,function(){
     console.log("serveur en marche")
