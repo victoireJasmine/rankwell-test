@@ -1,0 +1,578 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API",
+      "description": "Backend API Information",
+      "version": "1.0"
+    },
+    "securityDefinitions": {
+      "bearerAuth": {
+        "name": "Authorization",
+        "in": "header",
+        "type": "apiKey",
+        "description": "JWT Authorization header"
+      }
+    },
+    "security": [{ "bearerAuth": []}],
+    "tags": [{"name":"Authentification"}, {"name":"Tags"}, {"name":"Products"}, {"name":"Users"}, {"name":"Purchases"}],
+    "paths": {
+       "/api/users": {
+         "get": {
+           "tags": ["Users"],
+           "x-swagger-router-controller": "users",
+           "operationId": "getAllUsers",
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getAllUsers"
+                  }
+               }
+            }
+         }
+        },
+        "/api/users/{id}":{
+           "get":{
+              "tags":["Users"],
+              "x-swagger-router-controller":"users",
+              "operationId":"getUserById",
+              "parameters": [
+                {
+                   "name": "id",
+                   "in":"path",
+                   "type": "string",
+                   "required": true
+                }
+              ],
+              "responses":{
+                 "default":{
+                    "description":"Unexpected error",
+                    "schema":{
+                       "$ref":"#/definitions/Error"
+                    }
+                 },
+                 "200":{
+                    "description":"Successful request.",
+                    "schema":{
+                       "$ref":"#/definitions/getUser"
+                    }
+                 }
+              }
+           }
+        },
+        "/api/users/{id}/purchases":{
+           "get":{
+              "tags":["Users"],
+              "x-swagger-router-controller":"users",
+              "operationId":"getPurchasesUser",
+              "parameters":[
+                  {
+                     "name": "id",
+                     "in":"path",
+                     "type": "string",
+                     "required": true
+                  }
+              ],
+              "responses":{
+                 "default":{
+                    "description":"Unexpected error",
+                    "schema":{
+                       "$ref":"#/definitions/Error"
+                    }
+                 },
+                 "200":{
+                     "description":"Successful request.",
+                     "schema":{
+                        "$ref":"#/definitions/getPurchasesUser"
+                     }
+                  }
+              }
+           }
+        },
+        "/api/auth/login": {
+           "post": {
+              "tags": ["Authentification"],
+              "x-swagger-router-controller": "auth",
+              "operationId": "login",
+              "parameters": [
+                {
+                  "name": "data",
+                  "in": "body",
+                  "description": "Login user",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/loginUser"
+                  }
+                }
+              ],
+              "responses": {
+                "default": {
+                  "description": "Unexpected error",
+                  "schema": {
+                    "$ref": "#/definitions/Error"
+                  }
+                },
+                "201": {
+                  "description": "User logged",
+                  "schema": {
+                    "$ref": "#/definitions/responseLogin"
+                  }
+                }
+              }
+           }
+        },
+        "/api/auth/signup": {
+           "post": {
+              "tags": ["Authentification"],
+              "x-swagger-router-controller": "auth",
+              "operationId": "signup",
+              "parameters": [
+                {
+                  "name": "data",
+                  "in": "body",
+                  "description": "create an account",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/signup"
+                  }
+                }
+              ],
+              "responses": {
+                "default": {
+                  "description": "Unexpected error",
+                  "schema": {
+                    "$ref": "#/definitions/Error"
+                  }
+                },
+                "201": {
+                  "description": "User created",
+                  "schema": {
+                    "$ref": "#/definitions/Success"
+                  }
+                }
+              }
+           }
+        },
+        "/api/auth/connected": {
+           "get": {
+              "tags": ["Authentification"],
+              "x-swagger-router-controller": "auth",
+              "operationId": "connected",
+              "parameters": [],
+              "responses": {
+                "default": {
+                  "description": "Unexpected error",
+                  "schema": {
+                    "$ref": "#/definitions/Error"
+                  }
+                },
+                "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getUser"
+                  }
+               }
+              }
+           }
+        },
+        "/api/tags": {
+           "get": {
+              "tags": ["Tags"],
+              "x-swagger-router-controller": "tags",
+              "operationId": "getAllTags",
+              "responses":{
+                 "default":{
+                    "description":"Unexpected error",
+                    "schema":{
+                       "$ref":"#/definitions/Error"
+                    }
+                 },
+                 "200":{
+                    "description":"Successful request.",
+                    "schema":{
+                       "$ref":"#/definitions/getAllTags"
+                    }
+                 }
+              }
+           }
+        },
+        "/api/products": {
+         "get": {
+            "tags": ["Products"],
+            "x-swagger-router-controller": "products",
+            "operationId": "getAllProducts",
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getAllProducts"
+                  }
+               }
+            }
+         }
+        },
+        "/api/purchases": {
+           "get": {
+              "tags": ["Purchases"],
+              "x-swagger-router-controller": "purchases",
+              "operationId": "getAllPurchases",
+              "responses":{
+                 "default":{
+                    "description":"Unexpected error",
+                    "schema":{
+                       "$ref":"#/definitions/Error"
+                    }
+                 },
+                 "200":{
+                    "description":"Successful request.",
+                    "schema":{
+                       "$ref":"#/definitions/getAllPurchases"
+                    }
+                 }
+              }
+           },
+           "post": {
+              "tags": ["Purchases"],
+              "x-swagger-router-controller": "purchases",
+              "operationId": "postPurchase",
+              "parameters": [
+                {
+                  "name": "data",
+                  "in": "body",
+                  "description": "Create Purchase",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/postPurchase"
+                  }
+                }
+              ],
+              "responses": {
+                "default": {
+                  "description": "Unexpected error",
+                  "schema": {
+                    "$ref": "#/definitions/Error"
+                  }
+                },
+                "201": {
+                  "description": "Purchase Created",
+                  "schema": {
+                    "$ref": "#/definitions/Success"
+                  }
+                }
+              }
+           }
+        },
+        "/api/purchases/{id}":{
+          "get":{
+             "tags":["Purchases"],
+             "x-swagger-router-controller":"purchases",
+             "operationId":"getPurchaseById",
+             "parameters": [
+               {
+                  "name": "id",
+                  "in":"path",
+                  "type": "string",
+                  "required": true
+               }
+             ],
+             "responses":{
+                "default":{
+                   "description":"Unexpected error",
+                   "schema":{
+                      "$ref":"#/definitions/Error"
+                   }
+                },
+                "200":{
+                   "description":"Successful request.",
+                   "schema":{
+                      "$ref":"#/definitions/getPurchase"
+                   }
+                }
+             }
+          },
+          "delete":{
+             "tags":["Purchases"],
+             "x-swagger-router-controller":"purchases",
+             "operationId":"deletePurchase",
+             "parameters": [
+               {
+                  "name": "id",
+                  "in":"path",
+                  "type": "string",
+                  "required": true
+               }
+             ],
+             "responses":{
+                "default":{
+                   "description":"Unexpected error",
+                   "schema":{
+                      "$ref":"#/definitions/Error"
+                   }
+                },
+                "201":{
+                   "description":"Successful request.",
+                   "schema":{
+                      "$ref":"#/definitions/Success"
+                   }
+                }
+             }
+          }
+        }
+     },
+    "definitions": {
+        "Error": {
+           "required": ["message"],
+           "properties": {
+              "entity": {
+                 "type": "string"
+              },
+              "message": {
+                 "type": "string"
+              }
+           }
+        },
+        "Success": {
+           "required": ["message"],
+           "properties": {
+              "entity": {
+                 "type": "string"
+              },
+              "message": {
+                 "type": "string"
+              }
+           }
+        },
+        "getAllUsers": {
+           "type": "array",
+           "items": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "firstname": { "type": "string" },
+                  "lastname": { "type": "string" },
+                  "email": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" }
+               }
+           }
+        },
+        "getUser": {
+           "type": "object",
+           "properties": {
+              "id": { "type": "string" },
+              "firstname": { "type": "string" },
+              "lastname": { "type": "string" },
+              "email": { "type": "string" },
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" }
+           }
+        },
+        "getPurchasesUser": {
+            "type": "array",
+            "items": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "user_id": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "product": {
+                     "type": "object",
+                     "properties": {
+                        "id": { "type": "string" },
+                        "label": { "type": "string" },
+                        "price": { "type": "integer" },
+                        "desc": { "type": "string" },
+                        "picture": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "products_tags": {
+                           "type": "object",
+                           "properties": {
+                              "tag": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+        },
+        "loginUser":{
+           "type":"object",
+           "properties":{
+              "email":{"type":"string"},
+              "password":{"type":"string"}
+           },
+           "required":["email","password"],
+           "example":{
+              "email": "test@test.fr",
+              "password": "123456"
+           }
+        },
+        "responseLogin":{
+           "type":"object",
+           "properties":{
+              "token":{"type":"string"}
+           }
+        },
+        "signup":{
+           "type":"object",
+           "properties":{
+              "firstname":{"type":"string"},
+              "lastname":{"type":"string"},
+              "email":{"type":"string"},
+              "password":{"type":"string"}
+           },
+           "required":["firstname","lastname","email","password"],
+           "example":{
+              "firstname": "Test",
+              "lastname": "Test",
+              "email": "test@test.fr",
+              "password": "123456"
+           }
+        },
+        "getAllTags": {
+            "type": "array",
+            "items": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" }
+               }
+            }
+         },
+        "getAllProducts": {
+            "type": "array",
+            "items": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "price": { "type": "integer" },
+                  "desc": { "type": "string" },
+                  "picture": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "products_tags": {
+                     "type": "object",
+                     "properties": {
+                        "tag": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+        },
+        "getAllPurchases": {
+            "type": "array",
+            "items": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "product": {
+                     "type": "object",
+                     "properties": {
+                        "id": { "type": "string" },
+                        "label": { "type": "string" },
+                        "price": { "type": "integer" },
+                        "desc": { "type": "string" },
+                        "picture": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "products_tags": {
+                           "type": "object",
+                           "properties": {
+                              "tag": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  },
+                  "user": {
+                     "type": "object",
+                     "properties": {
+                        "id": { "type": "string" },
+                        "firstname": { "type": "string" },
+                        "lastname": { "type": "string" },
+                        "email": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" }
+                     }
+                  }
+               }
+            }
+         },
+         "getPurchase": {
+            "type": "object",
+            "properties": {
+               "id": { "type": "string" },
+               "createdAt": { "type": "string" },
+               "updatedAt": { "type": "string" },
+               "product": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "label": { "type": "string" },
+                     "price": { "type": "integer" },
+                     "desc": { "type": "string" },
+                     "picture": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "products_tags": {
+                        "type": "object",
+                        "properties": {
+                           "tag": {
+                              "type": "object",
+                              "properties": {
+                                 "label": { "type": "string" }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "user": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "firstname": { "type": "string" },
+                     "lastname": { "type": "string" },
+                     "email": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" }
+                  }
+               }
+            }
+         }
+     }
+  }
+  

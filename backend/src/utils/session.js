@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken")
 const JWT_TOKEN = "loremipsum"
+var models = require('./../../models');
+
 
 module.exports = {
     generateToken: function (id) {
@@ -27,8 +29,19 @@ module.exports = {
         const authorization = req.headers["authorization"]
         const userData = module.exports.getUser(authorization)
         if (userData) {
-            req.user_id = userData.id
-            next()
+            models.Users.findOne({
+                attributes: { exclude: ['password'] },
+                where: { id: userData.id }
+            }).then(function(userFound) {
+                if(userFound){
+                    req.user = userFound
+                    next()
+                } else {
+                    return res.status(404).json({'error': 'cet utilisateur n\'existe pas'});
+                }
+            }).catch(function(err) {
+                return res.status(500).json({ 'error': 'impossible de récupérer l\'utilisateur' });
+            });
         } else {
             return res.status(503).json({message:"Accès refusés"})
         }
