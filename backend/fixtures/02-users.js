@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs")
 module.exports = [
     {
         model:"Users",
-        keys:["email"],
+        keys:["email","id"],
         data:{
             id:1,
             firstname:"vic",

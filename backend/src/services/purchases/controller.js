@@ -16,8 +16,8 @@ module.exports = {
                     include: [
                         {
                             model: models.Products_tags, as: "products_tags",  
-                            attributes: { exclude: ['id','product_id', 'tag_id', 'createdAt', 'updatedAt'] },
-                            include: [{model: "Tags", as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
+                            attributes: { exclude: ['product_id', 'tag_id', 'createdAt', 'updatedAt'] },
+                            include: [{model: models.Tags, as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
                         }
                     ]
                 }
@@ -52,8 +52,8 @@ module.exports = {
                     include: [
                         {
                             model: models.Products_tags, as: "products_tags",  
-                            attributes: { exclude: ['id','product_id', 'tag_id', 'createdAt', 'updatedAt'] },
-                            include: [{model: "Tags", as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
+                            attributes: { exclude: ['product_id', 'tag_id', 'createdAt', 'updatedAt'] },
+                            include: [{model: models.Tags, as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
                         }
                     ]
                 }
@@ -70,7 +70,7 @@ module.exports = {
       if(purchases){
         return res.status(200).json(purchases);
       } else {
-        return res.status(500).json({'error': 'opération échouée'});
+        return res.status(500).json({'error': 'cet achat n\'existe plus'});
       }
     });
   },
@@ -82,11 +82,12 @@ module.exports = {
 
     for (var i=0; i < products.length; i++) {
         var valueObj = {
-          product_id: parseInt(params[i]),
+          product_id: parseInt(products[i]),
           user_id: userId
         };
         allValues.push(valueObj);
     }
+   
 
     if(!allValues.length){
         return res.status(400).json({ 'error': 'paramètre products[] manquant dans le corps de la requête' });
@@ -98,8 +99,8 @@ module.exports = {
             .then((created)=>{
               done(created)
             })
-            .catch(()=>{
-              return res.status(500).json({'error': 'opération échouée'});
+            .catch((err)=>{
+              return res.status(500).json({'error': 'produit inexistant'});
             });
         }
       ], function(created){

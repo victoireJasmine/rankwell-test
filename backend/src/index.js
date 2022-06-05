@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const swaggerTools = require("swagger-tools")
 const { loadFixtures } = require("../fixtures"); //deconstruction
-let swaggerDoc = require("../swagger.json");
+let swaggerDoc = require("./swagger.json");
 
 const{tags,users,products,purchases,auth} = require("./services")
 
@@ -31,7 +31,7 @@ server.use("/api/users",users)
 server.use("/api/auth",auth)
 
 const options = {
-	controllers: "./services",
+	controllers: "./src/services",
 };
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {

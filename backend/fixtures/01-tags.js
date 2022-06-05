@@ -1,7 +1,7 @@
 module.exports = [
     {
         model:"Tags",
-        keys:["label"],
+        keys:["label","id"],
         data:{
             id:1,
             label:"electronique"
@@ -10,7 +10,7 @@ module.exports = [
     },
     {
         model:"Tags",
-        keys:["label"],
+        keys:["label","id"],
         data:{
             id:2,
             label:"beauté"
@@ -19,7 +19,7 @@ module.exports = [
     },
     {
         model:"Tags",
-        keys:["label"],
+        keys:["label","id"],
         data:{
             id:3,
             label:"enfant"
@@ -28,7 +28,7 @@ module.exports = [
     },
     {
         model:"Tags",
-        keys:["label"],
+        keys:["label","id"],
         data:{
             id:4,
             label:"femme"

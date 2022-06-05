@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: development_database
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8008:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+
+  api:
+    depends_on:
+      - db
+    build:
+      context: ./backend
+    restart: unless-stopped
+    ports:
+      - 3001:8080
+    volumes:
+      - ./backend:/usr/src/backend
+      - /usr/src/backend/node_modules
+    networks:
+      - backend
+      - frontend
+
+  vuejs:
+    depends_on:
+      - api
+    build:
+      context: ./frontend
+    ports:
+      - 3000:80
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:

@@ -21,6 +21,7 @@
            "tags": ["Users"],
            "x-swagger-router-controller": "users",
            "operationId": "getAllUsers",
+           "parameters": [],
             "responses":{
                "default":{
                   "description":"Unexpected error",
@@ -42,6 +43,7 @@
               "tags":["Users"],
               "x-swagger-router-controller":"users",
               "operationId":"getUserById",
+              
               "parameters": [
                 {
                    "name": "id",
@@ -186,6 +188,7 @@
               "tags": ["Tags"],
               "x-swagger-router-controller": "tags",
               "operationId": "getAllTags",
+              "parameters": [],
               "responses":{
                  "default":{
                     "description":"Unexpected error",
@@ -207,6 +210,7 @@
             "tags": ["Products"],
             "x-swagger-router-controller": "products",
             "operationId": "getAllProducts",
+            "parameters": [],
             "responses":{
                "default":{
                   "description":"Unexpected error",
@@ -228,6 +232,7 @@
               "tags": ["Purchases"],
               "x-swagger-router-controller": "purchases",
               "operationId": "getAllPurchases",
+              "parameters": [],
               "responses":{
                  "default":{
                     "description":"Unexpected error",
@@ -333,12 +338,10 @@
      },
     "definitions": {
         "Error": {
-           "required": ["message"],
+           "required": ["error"],
            "properties": {
-              "entity": {
-                 "type": "string"
-              },
-              "message": {
+              
+              "error": {
                  "type": "string"
               }
            }
@@ -346,9 +349,7 @@
         "Success": {
            "required": ["message"],
            "properties": {
-              "entity": {
-                 "type": "string"
-              },
+             
               "message": {
                  "type": "string"
               }
@@ -571,6 +572,16 @@
                      "updatedAt": { "type": "string" }
                   }
                }
+            }
+         },
+         "postPurchase":{
+            "type":"object",
+            "properties":{
+               "products":{"type":"array","items":{"type":"integer"}}
+            },
+            "required":["products"],
+            "example":{
+               "products": [1,2]
             }
          }
      }

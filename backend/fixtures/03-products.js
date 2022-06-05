@@ -1,7 +1,7 @@
 module.exports = [
     {
         model:"Products",
-        keys:["label"],
+        keys:["label","id"],
         data:{
             id:1,
             label:"produit",

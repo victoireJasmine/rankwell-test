@@ -3,7 +3,7 @@ const controller = require("./controller")
 exports.router = (function () {
     const router =  express.Router()
     
-    router.get("/tags", controller.getTags);
+    router.get("/", controller.getTags);
 
     return router;
 })()

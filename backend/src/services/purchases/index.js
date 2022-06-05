@@ -5,13 +5,13 @@ const {passport} = require('./../../utils/session')
 exports.router = (function () {
     const router =  express.Router()
     
-    router.get("/purchases", [passport, controller.getPurchases]);
+    router.get("/", [passport, controller.getPurchases]);
     
-    router.post("/purchases", [passport, controller.createPurchases]);
+    router.post("/", [passport, controller.createPurchases]);
 
-    router.get("/purchases/:id", [passport, controller.getPurchase]);
+    router.get("/:id", [passport, controller.getPurchase]);
 
-    router.delete("/purchases/:id", [passport, controller.deletePurchase]);
+    router.delete("/:id", [passport, controller.deletePurchase]);
 
     return router;
 })()

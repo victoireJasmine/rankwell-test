@@ -9,12 +9,17 @@ module.exports = {
   getProducts: function(req, res) {
     asyncLib.waterfall([
       function(done) {
-        models.Products.finAll({
+        models.Products.findAll({
             include: [
                 {
                     model: models.Products_tags, as: "products_tags",  
-                    attributes: { exclude: ['id','product_id', 'tag_id', 'createdAt', 'updatedAt'] },
-                    include: [{model: "Tags", as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
+                    attributes: { exclude: ['product_id', 'tag_id', 'createdAt', 'updatedAt'] },
+                    include: [
+                      {
+                        model: models.Tags, 
+                        as: "tag", 
+                        attributes: { exclude: ['id','createdAt','updatedAt'] },                            
+                      }]
                 }
             ]
         })

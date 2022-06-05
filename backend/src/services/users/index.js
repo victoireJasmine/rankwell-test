@@ -5,11 +5,11 @@ const {passport} = require('./../../utils/session')
 exports.router = (function () {
     const router =  express.Router()
 
-    router.get("/users", [passport, controller.getUsers]);
+    router.get("/", [passport, controller.getUsers]);
 
-    router.get("/users/:id", [passport, controller.getUsers]);
+    router.get("/:id", [passport, controller.getUser]);
 
-    router.get("/users/:id/purchases", [passport, controller.getPurchases]);
+    router.get("/:id/purchases", [passport, controller.getPurchases]);
 
     return router;
 })()

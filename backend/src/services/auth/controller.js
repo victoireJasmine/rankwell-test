@@ -88,7 +88,7 @@ module.exports = {
         },
         function(userFound, done) {
           if (userFound) {
-            bcrypt.compare(password, userFound.pwd, function(errBycrypt, resBycrypt) {
+            bcrypt.compare(password, userFound.password, function(errBycrypt, resBycrypt) {
               done(null, userFound, resBycrypt);
             });
           } else {

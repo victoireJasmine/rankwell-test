@@ -33,7 +33,7 @@ module.exports = {
   getUsers: function(req, res) {
     asyncLib.waterfall([
       function(done) {
-        models.Users.finAll({
+        models.Users.findAll({
           attributes: { exclude: ['password'] }
         }).then(function(userFound) {
           done(userFound);
@@ -74,8 +74,8 @@ module.exports = {
                         include: [
                             {
                                 model: models.Products_tags, as: "products_tags",  
-                                attributes: { exclude: ['id','product_id', 'tag_id', 'createdAt', 'updatedAt'] },
-                                include: [{model: "Tags", as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
+                                attributes: { exclude: ['product_id', 'tag_id', 'createdAt', 'updatedAt'] },
+                                include: [{model: models.Tags, as: "tag", attributes: { exclude: ['id','createdAt','updatedAt'] },                            }]
                             }
                         ]
                     }

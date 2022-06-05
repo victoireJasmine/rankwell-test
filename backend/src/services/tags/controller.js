@@ -9,7 +9,7 @@ module.exports = {
   getTags: function(req, res) {
     asyncLib.waterfall([
       function(done) {
-        models.Tags.finAll()
+        models.Tags.findAll()
         .then(function(Tags) {
           done(Tags);
         }).catch(function(err) {
