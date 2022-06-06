@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router"
 import Home from '@/views/Home.vue'
 import NotFound from '@/views/404.vue'
+import Panier from '@/views/Panier.vue'
+import Purchases from '@/views/Purchases.vue'
 
 const routes = [
     {
@@ -9,6 +11,24 @@ const routes = [
         component: Home,
         meta: {
             description:'Page d\'acceuil'
+        }
+
+    },
+    {
+        path:'/panier',
+        name:'Panier',
+        component: Panier,
+        meta: {
+            description:'Mon panier'
+        }
+
+    },
+    {
+        path:'/purchases',
+        name:'Purchases',
+        component: Purchases,
+        meta: {
+            description:'Mes achats'
         }
 
     },

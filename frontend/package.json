@@ -15,10 +15,12 @@
     "reset-css": "^5.0.1",
     "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
+    "vee-validate": "^4.5.11",
     "vue": "^3.2.13",
     "vue-chartjs": "^4.1.1",
     "vue-router": "^4.0.15",
     "vuesax": "^3.12.2",
+    "vuesax3": "^4.0.20",
     "vuex": "^4.0.2",
     "vuex-router-sync": "^6.0.0-rc.1"
   },
@@ -38,12 +40,16 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
+      "plugin:vue/vue3-recommended",
+      "plugin:vue/vue3-strongly-recommended",
       "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "vue/no-multiple-template-root": "off"
+    }
   },
   "browserslist": [
     "> 1%",
