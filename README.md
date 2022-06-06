@@ -1,5 +1,8 @@
 # rankwell-test
-test d'interface de gestion d'achat
+test d'interface de gestion d'achat 
+
+# install docker if not installed 
+ - https://www.docker.com/products/docker-desktop/
 
 
 # Launch docker 
