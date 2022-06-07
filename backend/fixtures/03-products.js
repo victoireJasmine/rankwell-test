@@ -82,7 +82,7 @@ module.exports = [
             id:6,
             label:"DIOR FOREVER",
             price:39,
-            picture:"",
+            picture:"https://www.sephora.fr/on/demandware.static/-/Sites-masterCatalog_Sephora/default/dw7aef0b31/images/hi-res/SKU/SKU_2876/578130_swatch.jpg",
             products_tags:[1,2,3,4],
             purchases:[1]
 

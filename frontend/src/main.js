@@ -8,8 +8,7 @@ import Vuesax from 'vuesax3'
 import 'vuesax3/dist/vuesax.css' //Vuesax styles
 import 'material-icons/iconfont/material-icons.css'
 import {count,validMail,validPassword} from '@/filters'
-//import VeeValidate from 'vee-validate';
-// sync(router,store)
+
 
 if (window.localStorage) {
     var localUserString = window.localStorage.getItem("user") || "null"

@@ -27,7 +27,7 @@ export default {
             let options = {
                             method: method.toUpperCase(),
                             headers: headers,
-                            body: data
+                            body: JSON.stringify(data)
                         }
             setUrl = fetch(url,options)
         }else {

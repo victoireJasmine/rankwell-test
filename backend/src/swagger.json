@@ -387,6 +387,7 @@
                "properties": {
                   "id": { "type": "string" },
                   "user_id": { "type": "string" },
+                  "product_id":{"type": "integer"},
                   "createdAt": { "type": "string" },
                   "updatedAt": { "type": "string" },
                   "product": {

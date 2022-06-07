@@ -15,4 +15,22 @@ export default {
         }
         context.commit('REMOVE_PRODUCT', index);
     },
+    setUser: (context, object) => {
+        if (window.localStorage) {
+            window.localStorage.setItem('user', JSON.stringify(object));
+        }
+        context.commit('SET_USER', object);
+    },
+    setToken: (context, value) => {
+        if (window.localStorage) {
+            window.localStorage.setItem('token', value);
+        }
+        context.commit('SET_TOKEN', value);
+    },
+    setAuth: (context, value) => {
+        if (window.localStorage) {
+            window.localStorage.setItem('isAuthenticated', JSON.stringify(value));
+        }
+        context.commit('SET_AUTH', value);
+    },
 }

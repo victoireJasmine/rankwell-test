@@ -11,13 +11,13 @@
         <p>Les valeurs dans le formulaire sont les identifiants par défaut</p>
 
         <vs-input
-          type="email" label-placeholder="Email" v-model="value1"/>
+          type="email" label-placeholder="Email" v-model.trim="email"/>
 
         <vs-input
           type="password"
-          label-placeholder="Password" v-model="value2"/>
+          label-placeholder="Password" v-model.trim="password"/>
 
-        <vs-button width="100%" color="primary" class="mt-10" type="gradient">Connexion</vs-button>
+        <vs-button width="100%" color="primary" class="mt-10" type="gradient" @click="login">Connexion</vs-button>
 
       </vs-dropdown-menu>
     </vs-dropdown>
@@ -25,48 +25,77 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name:'LoginPage',
   data() {
       return {
         email: 'vie@test.com',
-        password: '1234'
+        password: '1234',
+        colorAlert:'primary',
+        titleAlert:'Alert',
+        valueInput:'',
       }
-  },
-  computed: {
-      validateForm() {
-          return this.email != '' && this.password != '';
-      },
   },
   methods: {
-      login() {
+    ...mapActions([
+      'setUser',
+      'setToken',
+      'setAuth'
+    ]),
+    login() {
+      if(this.email != "" &&  this.password != ""){
           const payload = {
-              checkbox_remember_me: this.checkbox_remember_me,
-              userDetails: {
-                  email: this.email,
-                  password: this.password
-              },
-              notify: this.$vs.notify
+            email: this.email,
+            password: this.password
+        }
+        this.$store.state
+        .requestApi('post', '/auth/login', payload)
+        .then(response => {
+          if (response.error) {
+            console.log(response.error);
+            this.openAlert("danger","Connexion",response.error)
+          } else {
+            this.email = '';
+            this.password = '1234';
+            this.setToken(response.token);
+            this.getUserConnected();
           }
-          this.$store.dispatch('auth/loginAttempt', payload);
-      },
-
-      notifyAlreadyLogedIn() {
-          this.$vs.notify({
-              title: 'Login Attempt',
-              text: 'You are already logged in!',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'warning'
-          });
-      },
-      registerUser() {
-          if(this.$store.state.isAuthenticated) {
-              this.notifyAlreadyLogedIn();
-              return false;
-          }
-          this.$router.push('/register');
+        })
+        .catch(error => {
+            console.log(error);
+        })
       }
+    },
+    getUserConnected() {
+      this.$store.state
+      .requestApi('get', '/auth/connected')
+      .then(response => {
+        if (response.error) {
+          console.log(response.error);
+        } else {
+          this.setUser(response);
+          this.setAuth(true);
+          //reload
+          window.location.reload()
+        }
+      })
+      .catch(error => {
+          console.log(error);
+      })
+      
+    },
+    openAlert(color,retour, message){
+      this.colorAlert = color || this.getColorRandom()
+      this.$vs.dialog({
+        color:this.colorAlert,
+        title: retour,
+        text: message,
+        accept:this.acceptAlert
+      })
+    }
+
   }
 }
 

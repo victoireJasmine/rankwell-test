@@ -80,7 +80,6 @@ module.exports = {
                         ]
                     }
                 ],
-                attributes: { exclude: ['product_id'] },
                 where: { user_id: userId }
             }).then(function(purchases) {
                 done(purchases);

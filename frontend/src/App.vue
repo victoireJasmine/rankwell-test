@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header v-if="$route.name !== 'NotFound'">
-      <cart-btn :cartIcon="true">
+      <cart-btn :cartIcon="true" @click="goToCheckout">
         <vs-button radius color="success" v-if="hasProduct()">
           {{ getProductsInCart.length }}
         </vs-button>
@@ -28,6 +28,9 @@ export default {
     hasProduct() {
       return this.getProductsInCart.length > 0;
     },
+    goToCheckout(){
+      this.$router.push('/checkout')
+    }
   },
   computed: {
      ...mapGetters([

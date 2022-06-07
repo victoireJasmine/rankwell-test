@@ -10,17 +10,17 @@
         <h3>Inscription</h3>
         <p>Les valeurs dans le formulaire sont les identifiants par défaut</p>
 
-        <vs-input type="email" label-placeholder="Email" v-model="value1"/>
+        <vs-input type="email" label-placeholder="Email" v-model.trim="email"/>
 
-        <vs-input type="text" label-placeholder="Nom" v-model="value1"/>
+        <vs-input type="text" label-placeholder="Nom" v-model.trim="firstname"/>
 
-        <vs-input type="text" label-placeholder="Prénom" v-model="value1"/>
+        <vs-input type="text" label-placeholder="Prénom" v-model.trim="lastname"/>
 
-        <vs-input type="password" label-placeholder="Mot de passe" v-model="value2"/>
+        <vs-input type="password" label-placeholder="Mot de passe" v-model.trim="password"/>
 
-        <vs-input type="password" label-placeholder="Confirmer mot de passe" v-model="value2"/>
+        <vs-input type="password" label-placeholder="Confirmer mot de passe" v-model.trim="confirm"/>
 
-        <vs-button width="100%" color="primary" class="mt-10" type="gradient">incription</vs-button>
+        <vs-button width="100%" color="primary" class="mt-10" type="gradient" @click="register">incription</vs-button>
 
       </vs-dropdown-menu>
     </vs-dropdown>
@@ -32,44 +32,61 @@ export default {
   name:'RegisterPage',
   data() {
       return {
-        email: 'vie@test.com',
-        password: '1234'
+        email: null,
+        firstname: null,
+        lastname: null,
+        password: null,
+        confirm: null,
+        colorAlert:'primary',
+        titleAlert:'Alert',
+        valueInput:'',
       }
-  },
-  computed: {
-      validateForm() {
-          return this.email != '' && this.password != '';
-      },
   },
   methods: {
-      login() {
-          const payload = {
-              checkbox_remember_me: this.checkbox_remember_me,
-              userDetails: {
-                  email: this.email,
-                  password: this.password
-              },
-              notify: this.$vs.notify
-          }
-          this.$store.dispatch('auth/loginAttempt', payload);
-      },
+    register() {
+      if(this.email != "" &&  this.firstname != "" && this.lastname != "" &&  this.password != "" &&  this.confirm != ""){
+        if(this.password !== this.confirm){
+          this.openAlert("danger","Création de compte", "Les mots de passe ne sont pas identiques")
+          return;
+        }
+        
+        const payload = {
+            email: this.email,
+            firstname: this.firstname,
+            lastname: this.lastname,
+            password: this.password
+        }
+        this.$store.state
+        .requestApi('post', '/auth/signup', payload)
+        .then(response => {
+          if (response.error) {
+            console.log(response.error);
+            this.openAlert("danger","Création de compte",response.error)
+          } else {
+            this.email= null
+            this.firstname= null
+            this.lastname= null
+            this.password= null
+            this.confirm= null
 
-      notifyAlreadyLogedIn() {
-          this.$vs.notify({
-              title: 'Login Attempt',
-              text: 'You are already logged in!',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'warning'
-          });
-      },
-      registerUser() {
-          if(this.$store.state.isAuthenticated) {
-              this.notifyAlreadyLogedIn();
-              return false;
+            this.openAlert("success","Création de compte","Compte créé avec succès. Veuillez vous connecter")
           }
-          this.$router.push('/register');
+        })
+        .catch(error => {
+            console.log(error);
+        })
       }
+    },
+    openAlert(color,retour, message){
+      this.colorAlert = color || this.getColorRandom()
+      this.$vs.dialog({
+        color:this.colorAlert,
+        title: retour,
+        text: message,
+        accept:this.acceptAlert
+      })
+    }
+
   }
 }
 
